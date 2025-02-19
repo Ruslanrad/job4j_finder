@@ -24,24 +24,24 @@ public class Main {
         String pathOutput = argsName.get("o");
         Path start = Paths.get(directory);
 
-        if ("name".equals(tipeSearch)){
+        if ("name".equals(tipeSearch)) {
             source = Search.search(start, path -> path.toFile().getName().equals(fileName)).stream().toList();
         }
-        if ("mask".equals(tipeSearch)){
+        if ("mask".equals(tipeSearch)) {
             StringBuilder maskRegular = new StringBuilder();
             char[] charsMask = fileName.toCharArray();
             for (char c : charsMask) {
-                switch (c){
-                    case '.'-> maskRegular.append("\\.");
-                    case '*'-> maskRegular.append(".*");
-                    case '?'-> maskRegular.append(".{1}");
-                    default-> maskRegular.append(c);
+                switch (c) {
+                    case '.' -> maskRegular.append("\\.");
+                    case '*' -> maskRegular.append(".*");
+                    case '?' -> maskRegular.append(".{1}");
+                    default -> maskRegular.append(c);
                 }
             }
             Pattern pattern = Pattern.compile(maskRegular.toString());
             source = Search.search(start, path -> path.toFile().getName().matches(pattern.pattern())).stream().toList();
         }
-        if ("regex".equals(tipeSearch)){
+        if ("regex".equals(tipeSearch)) {
             try {
                 Pattern.compile(fileName);
                 source = Search.search(start, path -> path.toFile().getName().matches(fileName)).stream().toList();
